@@ -1,11 +1,24 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
 block body
-  +navbar("ECS Movies", "dropdown_menu")
-    +nav_item("/","active") Home
-    +nav_item("/list") Stock
-  .container
-    h1= title
-    .container
-    p| Welcome to #{title}
-    | We are based in #{place}.
+	//Navigation
+	+navbar("The Colenso project", "dropdown_menu")
+		+nav_item("/","active") Home
+		+nav_item("/Browse") Browse
+		+nav_item("/Search") Search
+		+nav_item("/AdvancedSearch") Advanced search
+	//Search bar
+	form.form-group(action="/search", method="get")
+		input.input-block-level(type="text", name="mysearch", placeholder="Query")
+		button.btn.btn-large(type="submit") Submit
+	//Page content
+	.container
+		h1= title
+		.container
+		p| Welcome to #{title}.
+
+		.search-results
+		ul
+		each val in place
+			li
+				a(href="/Colenso/#{val}") #{val}
