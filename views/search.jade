@@ -3,9 +3,9 @@ extends ../node_modules/jade-bootstrap/_bootstrap
 block body
 	//Navigation
 	+navbar("The Colenso project", "dropdown_menu")
-		+nav_item("/","active") Home
+		+nav_item("/") Home
 		+nav_item("/Browse") Browse
-		+nav_item("/Search") Search
+		+nav_item("/Search","active") Search
 		+nav_item("/XquerySearch") Advanced search
 	//Search bar
 	form.form-group(action="/search", method="get")
@@ -16,9 +16,10 @@ block body
 		h1= title
 		.container
 		p| Welcome to #{title}.
+		| Files that contain the term: '#{query_term}'.
 
 		.search-results
 		ul
-		each val in place
+		each val in query_results
 			li
 				a(href="/Colenso/#{val}") #{val}
