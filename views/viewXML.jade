@@ -1,23 +1,25 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
-head
-	link(href='/public/stylesheets/viewXML.css', rel='stylesheet')
+doctype html
+html
+	head
+		append styles
+			link(rel='stylesheet',href='/stylesheets/viewXML.css')
 
-block body
-	//Navigation
-	+navbar("The Colenso project", "dropdown_menu")
-		+nav_item("/") Home
-		+nav_item("/Browse","active") Browse
-		+nav_item("/Search") Search
-		+nav_item("/XquerySearch") Advanced search
-	//Search bar
-	form.form-group(action="/search", method="get")
-		input.input-block-level(type="text", name="mysearch", placeholder="Query")
-		button.btn.btn-large(type="submit") Submit
-	//Page content
-	.container
-		h1= title
+	block body
+		//Navigation
+		+navbar("The Colenso project", "dropdown_menu")
+			+nav_item("/") Home
+			+nav_item("/Browse","active") Browse
+			+nav_item("/Search") Search using plain text
+			+nav_item("/XquerySearch") Search using Xquery
+		//Page content
 		.container
-		p| Welcome to #{title}.
-	.container
-		#{xml}
+			h1= title
+			.container
+			p| Welcome to #{title}.
+			- var full_url="window.open('" + "/Download/Colenso/" + title + "')"
+			a(href="/Download/Colenso/" + title,download) Download XML
+			button(type="submit", onclick=full_url) Download XML
+		.container
+			#{xml}

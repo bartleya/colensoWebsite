@@ -1,24 +1,20 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
+append styles 
+	link(rel="stylesheet", href="/stylesheets/style.css")
+
 block body
 	//Navigation
 	+navbar("The Colenso project", "dropdown_menu")
 		+nav_item("/","active") Home
 		+nav_item("/Browse") Browse
-		+nav_item("/Search") Search
-		+nav_item("/XquerySearch") Advanced search
-	//Search bar
-	form.form-group(action="/search", method="get")
-		input.input-block-level(type="text", name="mysearch", placeholder="Query")
-		button.btn.btn-large(type="submit") Submit
+		+nav_item("/Search") Search using plain text
+		+nav_item("/XquerySearch") Search using Xquery
 	//Page content
 	.container
 		h1= title
 		.container
-		p| Welcome to #{title}.
+		p| The Colenso Society, Victoria University of Wellington and MTG Hawke's Bay are delighted to announce the establishment of the Colenso Project. This exciting new initiative seeks to build on the blossoming national and international interest in William Colenso’s life and ideas as the result of the William Colenso Bicentenary Celebrations in Hawke’s Bay in 2011, and a body of new publications and research.
+		| For more information on the Colenso Project, visit #[a(href='http://www.williamcolenso.co.nz') www.williamcolenso.co.nz].
 
 		.search-results
-		ul
-		each val in place
-			li
-				a(href="/Colenso/#{val}") #{val}

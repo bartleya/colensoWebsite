@@ -1,0 +1,21 @@
+extends ../node_modules/jade-bootstrap/_bootstrap
+
+block body
+	//Navigation
+	+navbar("The Colenso project", "dropdown_menu")
+		+nav_item("/") Home
+		+nav_item("/Browse", "active") Browse
+		+nav_item("/Search") Search using plain text
+		+nav_item("/XquerySearch") Search using Xquery
+	//Page content
+	.container
+		h1= title
+		.container
+		p| Welcome to #{title}.
+		| All files contained in the Colenso database:
+
+		.search-results
+		ul
+		each val in query_results
+			li
+				a(href="/Colenso/#{val}") #{val}
