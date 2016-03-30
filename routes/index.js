@@ -23,12 +23,14 @@ router.get("/Search", function(req,res) {
 	var queries = req.query;
 	if (queries.mysearch==null || queries.mysearch==false) {
 		//If this is the first time visiting the page, there won't have been a search yet.
-		console.log("Null or false");
-		res.render('search', { title: 'Colenso plain text search', query_results: false, query_term: "" });
+		res.render('search', { title: 'Colenso plain text search', query_results: false, query_term: false });
 	} else {
 			client.execute(tei_path + "for $n in (/TEI[. contains text " + queries.mysearch + "]) return db:path($n)",
 		function (error, result) {
-			if(error){ console.error(error);}
+			if(error){ 
+				res.render('search', { title: 'Colenso search results', query_results: false, query_term: queries.mysearch });
+				//console.error(error);
+			}
 			else {
 				res.render('search', { title: 'Colenso search results', query_results: result.result.split('\n'), query_term: queries.mysearch });
 			}
@@ -43,12 +45,14 @@ router.get("/XquerySearch", function(req,res) {
 	var queries = req.query;
 	if (queries.mysearch==null || queries.mysearch==false) {
 		//If this is the first time visiting the page, there won't have been a search yet.
-		console.log("Null or false");
-		res.render('XquerySearch', { title: 'Colenso Xquery search', query_results: false, query_term: "" });
+		res.render('XquerySearch', { title: 'Colenso Xquery search', query_results: false, query_term: false });
 	} else {
 		client.execute(tei_path + "for $n in (" + queries.mysearch + ") return db:path($n)",
 		function (error, result) {
-			if(error){ console.error(error);}
+			if(error){ 
+				res.render('XquerySearch', { title: 'Colenso search results', query_results: false, query_term: queries.mysearch });
+				//console.error(error);
+			}
 			else {
 				res.render('XquerySearch', { title: 'Colenso search results', query_results: result.result.split('\n'), query_term: queries.mysearch });
 			}

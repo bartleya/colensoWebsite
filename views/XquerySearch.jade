@@ -1,5 +1,9 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
+head
+	append styles
+		link(rel="stylesheet", href="/stylesheets/style.css")
+
 block body
 	//Navigation
 	+navbar("The Colenso project", "dropdown_menu")
@@ -8,24 +12,31 @@ block body
 		+nav_item("/Search") Search using plain text
 		+nav_item("/XquerySearch","active") Search using Xquery
 	.container
-		//Search bar
-		form.form-group(action="/XquerySearch", method="get")
-			input.input-block-level(type="text", name="mysearch", placeholder="Query")
-			button.btn.btn-large(type="submit") Submit
-
-		//Explaining how to search
-		p| To search the Colenso database, simply type in any Xquery. TEI namespace information is not required, since it applies to all files in the database. For example if you want to find all files that contain the place tag 'Wellington' you would type '//name[@type='place' and . = 'Wellington']'.
-
-		//Page content
 		h1= title
+		.search
+			//Search bar
+			form.form-group(action="/XquerySearch", method="get")
+				input.input-block-level(type="text", name="mysearch", placeholder="Query")
+				button.btn.btn-large(type="submit") Submit
+
+			//Explaining how to search
+			p| To search the Colenso database, simply type in any Xquery. TEI namespace information is not required, since it applies to all files in the database. 
+			| For example if you want to find all files that contain the place tag 'Wellington' you would type '//name[@type='place' and . = 'Wellington']'.
+		
+		//Page content
+		
 		.container
-		p| Welcome to #{title}.
 
-		if (query_results)
-			p| Files that match the query: '#{query_term}'.
+		//If there is no query_term, this is the first time visiting this page.
+		if (query_term)
+			//If there are no query_results, the query has errored.
+			if (query_results)
+				p| Files that match the query: '#{query_term}'.
 
-			.search-results
-			ul
-			each val in query_results
-				li
-					a(href="/Colenso/#{val}") #{val}
+				.search-results
+				ul
+				each val in query_results
+					li
+						a(href="/Colenso/#{val}") #{val}
+			else
+				p| An error occured trying to execute the query: #{query_term}.

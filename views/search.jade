@@ -1,5 +1,9 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
+head
+	append styles
+		link(rel="stylesheet", href="/stylesheets/style.css")
+
 block body
 	//Navigation
 	+navbar("The Colenso project", "dropdown_menu")
@@ -8,24 +12,32 @@ block body
 		+nav_item("/Search","active") Search using plain text
 		+nav_item("/XquerySearch") Search using Xquery
 	.container
-		//Search bar
-		form.form-group(action="/search", method="get")
-			input.input-block-level(type="text", name="mysearch", placeholder="Query")
-			button.btn.btn-large(type="submit") Submit
+		h1= title
+		.search
+			//Search bar
+			form.form-group(action="/search", method="get")
+				input.input-block-level(type="text", name="mysearch", placeholder="Query")
+				button.btn.btn-large(type="submit") Submit
 
-		//Explaining how to search
-		p| To search the Colenso database, simply type in any text string for example 'Wellington'. This will then show all files in the database that contain this text string. Logical operators like AND, OR, NOT are not yet supported.
+			//Explaining how to search
+			p| To search the Colenso database, simply type in any text string for example 'Wellington'. Please note that the ' are important, and simply typing Wellington will not work. 
+			p| This will then show all files in the database that contain this text string. 
+			p| Logical operators like AND, OR, NOT can be used by typing ftand, ftor, ftnot. For example 'Wellington' ftand 'native'.
 
 		//Page content
-		h1= title
+		
 		.container
-		p| Welcome to #{title}.
 
-		if (query_results)
-			p| Files that contain the term(s): #{query_term}.
+		//If there is no query_term, this is the first time visiting this page.
+		if (query_term)
+			//If there are no query_results, the query has errored.
+			if (query_results)
+				p| Files that contain the term(s): #{query_term}.
 
-			.search-results
-			ul
-			each val in query_results
-				li
-					a(href="/Colenso/#{val}") #{val}
+				.search-results
+				ul
+				each val in query_results
+					li
+						a(href="/Colenso/#{val}") #{val}
+			else
+				p| An error occured trying to search the term(s): #{query_term}.

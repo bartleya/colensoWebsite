@@ -1,5 +1,9 @@
 extends ../node_modules/jade-bootstrap/_bootstrap
 
+head
+	append styles
+		link(rel="stylesheet", href="/stylesheets/style.css")
+
 block body
 	//Navigation
 	+navbar("The Colenso project", "dropdown_menu")
@@ -11,8 +15,7 @@ block body
 	.container
 		h1= title
 		.container
-		p| Welcome to #{title}.
-		| All files contained in the Colenso database:
+		p| All files contained in the Colenso database:
 
 		.search-results
 		ul

@@ -4,7 +4,7 @@ doctype html
 html
 	head
 		append styles
-			link(rel='stylesheet',href='/stylesheets/viewXML.css')
+			link(rel='stylesheet',href='/stylesheets/style.css')
 
 	block body
 		//Navigation
@@ -16,10 +16,9 @@ html
 		//Page content
 		.container
 			h1= title
-			.container
-			p| Welcome to #{title}.
-			- var full_url="window.open('" + "/Download/Colenso/" + title + "')"
-			a(href="/Download/Colenso/" + title,download) Download XML
-			button(type="submit", onclick=full_url) Download XML
+			.search
+				- var full_url="window.open('" + "/Download/Colenso/" + title + "')"
+				a(href="/Download/Colenso/" + title,download) Download XML
+				button(type="submit", onclick=full_url) View full XML
 		.container
-			#{xml}
+			!{xml}
